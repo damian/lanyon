@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"io/ioutil"
+	"os"
 	"path/filepath"
-  "os"
-  "fmt"
 
 	"github.com/russross/blackfriday"
 )
@@ -36,16 +36,16 @@ func NewPage(filename string) (*Page, error) {
 }
 
 func (page *Page) save() error {
-  output_path := fmt.Sprintf("./_site/%s.html", page.Filename)
-  file, err := os.Create(output_path)
-  defer file.Close()
+	output_path := fmt.Sprintf("./_site/%s.html", page.Filename)
+	file, err := os.Create(output_path)
+	defer file.Close()
 
-  if err != nil {
-    panic(err)
-  }
+	if err != nil {
+		panic(err)
+	}
 
-  tmpl, err := template.ParseFiles("layouts/application.html")
-  return tmpl.Execute(file, page)
+	tmpl, err := template.ParseFiles("layouts/application.html")
+	return tmpl.Execute(file, page)
 }
 
 func parseFilename(path string) string {
