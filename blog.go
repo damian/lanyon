@@ -9,7 +9,7 @@ type Blog struct {
 	pages []*Page
 }
 
-func NewPages(dirname string) (*Blog, error) {
+func NewBlog(dirname string) (*Blog, error) {
 	blog := Blog{}
 
 	files, _ := ioutil.ReadDir(dirname)
@@ -20,7 +20,6 @@ func NewPages(dirname string) (*Blog, error) {
 			fmt.Println("File error: %v", err)
 		}
 
-		fmt.Println(page)
 		blog.pages = append(blog.pages, page)
 		page.save()
 	}
