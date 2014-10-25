@@ -5,8 +5,9 @@ import (
 	"os"
 )
 
+var config, err = NewConfig("config.json")
+
 func main() {
-	// TODO: Directory here driven from a config object
 	app := cli.NewApp()
 	app.Name = "lanyon"
 	app.Usage = "A JSON based static site generator"
@@ -16,6 +17,7 @@ func main() {
 			ShortName: "s",
 			Usage:     "start a lanyon server",
 			Action: func(c *cli.Context) {
+				NewBlog(config.Source)
 				Server()
 			},
 		},
@@ -24,7 +26,14 @@ func main() {
 			ShortName: "b",
 			Usage:     "compile site from static JSON",
 			Action: func(c *cli.Context) {
-				NewBlog("_posts/")
+				NewBlog(config.Source)
+			},
+		},
+		{
+			Name:  "new",
+			Usage: "scaffolds a new lanyon website",
+			Action: func(c *cli.Context) {
+				println("Generated:", c.Args().First())
 			},
 		},
 	}
