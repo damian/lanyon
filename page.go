@@ -45,6 +45,7 @@ func (page *Page) save() error {
 	}
 
 	tmpl, err := template.ParseFiles("layouts/application.html")
+	fmt.Println("Page generated:", output_path)
 	return tmpl.Execute(file, page)
 }
 
