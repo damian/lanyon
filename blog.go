@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 )
 
 type Blog struct {
@@ -21,7 +22,13 @@ func NewBlog(dirname string) (*Blog, error) {
 		}
 
 		blog.pages = append(blog.pages, page)
-		page.save()
+		err = page.save()
+
+		if err != nil {
+			log.Println("Output error: %v", err)
+			return nil, err
+		}
+		fmt.Println("Page generated:", page.Filename)
 	}
 
 	return &blog, nil

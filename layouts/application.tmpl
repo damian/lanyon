@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
-  
-  <head>
-     <title>Hello world</title>
-
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width" />
-      <link href="http://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet" type="text/css">
-      <link rel="stylesheet" href="/stylesheets/application.css" type="text/css" media="screen, projection">
-  </head>
-
+  {{ template "header" . }}
   <body>
     <header>
       <h1><a href="/">Damian Nicholson</a></h1>
@@ -24,11 +15,10 @@
     <div class="site">
       <article>
         <div class="intro">
-          <h1>Hello world</h1>
+          <h1>{{ .Title }}</h1>
           <div class="meta"></div>
         </div>
-        <div><p>Lorem ipsum yada yada ya</p>
-</div>
+        <div>{{ .FormattedBody }}</div>
       </article>
     </div>
   </body>

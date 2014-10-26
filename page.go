@@ -44,8 +44,7 @@ func (page *Page) save() error {
 		panic(err)
 	}
 
-	tmpl, err := template.ParseFiles("layouts/application.html")
-	fmt.Println("Page generated:", output_path)
+	tmpl := template.Must(template.ParseGlob("layouts/*.tmpl"))
 	return tmpl.Execute(file, page)
 }
 

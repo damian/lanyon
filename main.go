@@ -33,6 +33,7 @@ func main() {
 			Name:  "new",
 			Usage: "scaffolds a new lanyon website",
 			Action: func(c *cli.Context) {
+				// TODO: Build a lanyon scaffolder
 				println("Generated:", c.Args().First())
 			},
 		},
