@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <title>Editing interface</title>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width" />
+      <link href="http://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/stylesheets/application.css" type="text/css" media="screen, projection">
+      <link rel="stylesheet" href="/stylesheets/codemirror.css" type="text/css" media="screen, projection">
+      <link rel="stylesheet" href="/stylesheets/writing.css" type="text/css" media="screen, projection">
+  </head>
+
+  <body>
+    <div class="site">
+      <form>
+        <input type="text" name="title" placeholder="Type your title" />
+        <textarea name="body" placeholder="Type your post" rows="5"></textarea>
+        <input type="submit" value="Cancel">
+        <input type="submit" value="Save draft">
+        <input type="submit" value="Publish">
+      </form>
+    </div>
+    <script src="/javascripts/codemirror.js"></script>
+    <script src="/javascripts/codemirror/markdown.js"></script>
+    <script src="/javascripts/application.js"></script>
+  </body>
+</html>
+
