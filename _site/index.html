@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html>
+  
   <head>
-     <title>Editing interface</title>
+     <title>Hello world</title>
 
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width" />
       <link href="http://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet" type="text/css">
       <link rel="stylesheet" href="/stylesheets/application.css" type="text/css" media="screen, projection">
-      <link rel="stylesheet" href="/stylesheets/codemirror.css" type="text/css" media="screen, projection">
-      <link rel="stylesheet" href="/stylesheets/writing.css" type="text/css" media="screen, projection">
   </head>
 
   <body>
+    <header>
+      <h1><a href="/">Damian Nicholson</a></h1>
+      <div class="contact-details">
+        <a href="/blog">Blog</a>
+        <a href="mailto:hi@damiannicholson.com">Contact</a>
+        <a href="https://twitter.com/damian">Twitter</a>
+        <a href="https://github.com/damian">Code</a>
+      </div>
+      <div class="clearfix"></div>
+    </header>
     <div class="site">
-      <form>
-        <input type="text" name="title" placeholder="Type your title" />
-        <textarea name="body" placeholder="Type your post" rows="5"></textarea>
-        <input type="submit" value="Cancel">
-        <input type="submit" value="Save draft">
-        <input type="submit" value="Publish">
-      </form>
+      <article>
+        <div class="intro">
+          <h1>Hello world</h1>
+          <div class="meta"></div>
+        </div>
+        <div><p>Lorem ipsum yada yada ya</p>
+</div>
+      </article>
     </div>
-    <script src="/javascripts/codemirror.js"></script>
-    <script src="/javascripts/codemirror/markdown.js"></script>
-    <script src="/javascripts/application.js"></script>
   </body>
 </html>
 

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
+	"os"
+	"path/filepath"
 )
 
 type Blog struct {
@@ -13,22 +13,51 @@ type Blog struct {
 func NewBlog(dirname string) (*Blog, error) {
 	blog := Blog{}
 
-	files, _ := ioutil.ReadDir(dirname)
-	for _, f := range files {
-		fullpath := fmt.Sprintf("%s%s", dirname, f.Name())
-		page, err := NewPage(fullpath)
+	walkFn := func(path string, info os.FileInfo, err error) error {
+		stat, err := os.Stat(path)
 		if err != nil {
-			fmt.Println("File error: %v", err)
+			return err
+		}
+
+		if stat.IsDir() {
+			directory, err := NewDirectory(path)
+
+			if err != nil {
+				return nil
+			}
+
+			err = directory.save()
+
+			if err != nil {
+				fmt.Println("Boo: ", directory)
+			}
+			return nil
+		}
+
+		fmt.Println("Path: ", path)
+		page, err := NewPage(path)
+
+		if err != nil {
+			fmt.Println("File error: ", err)
+			return err
 		}
 
 		blog.pages = append(blog.pages, page)
+
 		err = page.save()
 
 		if err != nil {
-			log.Println("Output error: %v", err)
-			return nil, err
+			fmt.Println("Output error: ", err)
+			return err
 		}
-		fmt.Println("Page generated:", page.Filename)
+
+		return nil
+	}
+
+	err := filepath.Walk(dirname, walkFn)
+
+	if err != nil {
+		return nil, err
 	}
 
 	return &blog, nil
