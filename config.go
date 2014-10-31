@@ -9,6 +9,7 @@ type Config struct {
 	Port        uint16
 	Source      string
 	Destination string
+	Static      string
 }
 
 func NewConfig(filename string) (*Config, error) {

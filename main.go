@@ -26,6 +26,7 @@ func main() {
 			ShortName: "b",
 			Usage:     "compile site from static JSON",
 			Action: func(c *cli.Context) {
+				CopyStaticAssets(config.Static, config.Destination)
 				NewBlog(config.Source)
 			},
 		},

@@ -16,7 +16,8 @@ func NewDirectory(dirname string) (*Directory, error) {
 }
 
 func (directory *Directory) save() error {
-  // This directory path needs manipulating to the output path
+	// config.Destination
+	// This directory path needs manipulating to the output path
 	fmt.Println(directory.Path)
 	err := os.MkdirAll(directory.Path, 0666)
 
