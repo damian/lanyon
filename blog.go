@@ -34,7 +34,7 @@ func NewBlog(dirname string) (*Blog, error) {
 			return nil
 		}
 
-		fmt.Println("Path: ", path)
+		//fmt.Println("Path: ", path)
 		page, err := NewPage(path)
 
 		if err != nil {

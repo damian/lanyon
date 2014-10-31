@@ -10,7 +10,7 @@ func CopyStaticAssets(source string, dest string) error {
 		fmt.Println("Error copying files: ", err)
 		return err
 	} else {
-		fmt.Println("Files copied")
+		fmt.Println("Static directory copied.")
 	}
 
 	return nil

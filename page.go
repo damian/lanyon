@@ -1,12 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"html/template"
 	"io/ioutil"
-	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/russross/blackfriday"
 )
@@ -16,6 +17,7 @@ type Page struct {
 	Body          string
 	FormattedBody template.HTML
 	Filename      string
+	RelativePath  string
 }
 
 func NewPage(filename string) (*Page, error) {
@@ -31,21 +33,27 @@ func NewPage(filename string) (*Page, error) {
 	formattedBody := blackfriday.MarkdownCommon([]byte(page.Body))
 	page.FormattedBody = template.HTML(formattedBody)
 	page.Filename = parseFilename(filename)
+	page.RelativePath = filename
 
 	return &page, nil
 }
 
 func (page *Page) save() error {
-	output_path := fmt.Sprintf("./_site/%s.html", page.Filename)
-	file, err := os.Create(output_path)
-	defer file.Close()
+	output := strings.Replace(page.RelativePath, config.Source, config.Destination, 1)
+	output = strings.Replace(output, ".json", ".html", 1)
+
+	var doc bytes.Buffer
+	tmpl := template.Must(template.ParseGlob("layouts/*.tmpl"))
+	tmpl.Execute(&doc, page)
+
+	err = ioutil.WriteFile(output, []byte(doc.String()), 0666)
 
 	if err != nil {
-		panic(err)
+		fmt.Println("File generation error: ", err)
+		return err
 	}
 
-	tmpl := template.Must(template.ParseGlob("layouts/*.tmpl"))
-	return tmpl.Execute(file, page)
+	return nil
 }
 
 func parseFilename(path string) string {

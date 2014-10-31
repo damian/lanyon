@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 type Directory struct {
@@ -16,12 +17,11 @@ func NewDirectory(dirname string) (*Directory, error) {
 }
 
 func (directory *Directory) save() error {
-	// config.Destination
-	// This directory path needs manipulating to the output path
-	fmt.Println(directory.Path)
-	err := os.MkdirAll(directory.Path, 0666)
+	output := strings.Replace(directory.Path, config.Source, config.Destination, 1)
+	err := os.MkdirAll(output, 0777)
 
 	if err != nil {
+		fmt.Println("Error setting up site directory structure")
 		return err
 	}
 

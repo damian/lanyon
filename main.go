@@ -17,6 +17,7 @@ func main() {
 			ShortName: "s",
 			Usage:     "start a lanyon server",
 			Action: func(c *cli.Context) {
+				CopyStaticAssets(config.Static, config.Destination)
 				NewBlog(config.Source)
 				Server()
 			},
