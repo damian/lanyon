@@ -1,26 +1,18 @@
+{{ define "application" }}
 <!DOCTYPE html>
 <html>
-  {{ template "header" . }}
+  {{ template "head" . }}
   <body>
-    <header>
-      <h1><a href="/">Damian Nicholson</a></h1>
-      <div class="contact-details">
-        <a href="/blog">Blog</a>
-        <a href="mailto:hi@damiannicholson.com">Contact</a>
-        <a href="https://twitter.com/damian">Twitter</a>
-        <a href="https://github.com/damian">Code</a>
-      </div>
-      <div class="clearfix"></div>
-    </header>
+    {{ template "header" . }}
     <div class="site">
       <article>
         <div class="intro">
-          <h1>{{ .Title }}</h1>
+          <h1>{{ .Page.Title }}</h1>
           <div class="meta"></div>
         </div>
-        <div>{{ .FormattedBody }}</div>
+        <div>{{ .Page.FormattedBody }}</div>
       </article>
     </div>
   </body>
 </html>
-
+{{ end }}

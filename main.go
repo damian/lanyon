@@ -6,6 +6,7 @@ import (
 )
 
 var config, err = NewConfig("config.json")
+var blog *Blog
 
 func main() {
 	app := cli.NewApp()
@@ -18,7 +19,8 @@ func main() {
 			Usage:     "start a lanyon server",
 			Action: func(c *cli.Context) {
 				CopyStaticAssets(config.Static, config.Destination)
-				NewBlog(config.Source)
+				blog, _ = NewBlog(config.Source)
+				blog.save()
 				Server()
 			},
 		},
@@ -28,7 +30,8 @@ func main() {
 			Usage:     "compile site from static JSON",
 			Action: func(c *cli.Context) {
 				CopyStaticAssets(config.Static, config.Destination)
-				NewBlog(config.Source)
+				blog, _ = NewBlog(config.Source)
+				blog.save()
 			},
 		},
 		{

@@ -7,11 +7,19 @@ import (
 )
 
 type Blog struct {
-	pages []*Page
+	Pages []*Page
+}
+
+func (blog_entry *Blog) save() error {
+	for _, page := range blog_entry.Pages {
+		page.save()
+	}
+
+	return nil
 }
 
 func NewBlog(dirname string) (*Blog, error) {
-	blog := Blog{}
+	blog_entry := Blog{}
 
 	walkFn := func(path string, info os.FileInfo, err error) error {
 		stat, err := os.Stat(path)
@@ -34,7 +42,6 @@ func NewBlog(dirname string) (*Blog, error) {
 			return nil
 		}
 
-		//fmt.Println("Path: ", path)
 		page, err := NewPage(path)
 
 		if err != nil {
@@ -42,14 +49,7 @@ func NewBlog(dirname string) (*Blog, error) {
 			return err
 		}
 
-		blog.pages = append(blog.pages, page)
-
-		err = page.save()
-
-		if err != nil {
-			fmt.Println("Output error: ", err)
-			return err
-		}
+		blog_entry.Pages = append(blog_entry.Pages, page)
 
 		return nil
 	}
@@ -60,5 +60,5 @@ func NewBlog(dirname string) (*Blog, error) {
 		return nil, err
 	}
 
-	return &blog, nil
+	return &blog_entry, nil
 }

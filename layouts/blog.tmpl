@@ -1,0 +1,20 @@
+{{ define "blog" }}
+<!DOCTYPE html>
+<html>
+  {{ template "head" . }}
+  <body>
+    {{ template "header" . }}
+    <div class="site">
+      <h3>Recent posts</h3>
+
+      {{ range .Blog.Pages }}
+        {{ if not .IsIndex }}
+          <div class="post">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </div>
+        {{ end }}
+      {{ end }}
+    </div>
+  </body>
+</html>
+{{ end }}

@@ -10,6 +10,7 @@ type Config struct {
 	Source      string
 	Destination string
 	Static      string
+	Layout      string
 }
 
 func NewConfig(filename string) (*Config, error) {
