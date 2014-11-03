@@ -35,6 +35,13 @@ func main() {
 			},
 		},
 		{
+			Name:  "editor",
+			Usage: "launches editor mode for writing new blog posts",
+			Action: func(c *cli.Context) {
+				NewEditor()
+			},
+		},
+		{
 			Name:  "new",
 			Usage: "scaffolds a new lanyon website",
 			Action: func(c *cli.Context) {
