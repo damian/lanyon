@@ -7,12 +7,13 @@ import (
 )
 
 type Directory struct {
-	Path string
+	CompositeNode
 }
 
 func NewDirectory(dirname string) (*Directory, error) {
 	directory := Directory{}
-	directory.Path = dirname
+	directory.CompositeNode = NewCompositeNode(dirname)
+
 	return &directory, nil
 }
 

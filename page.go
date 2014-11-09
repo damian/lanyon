@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
-	"path/filepath"
 	"strings"
 
 	"github.com/russross/blackfriday"
@@ -16,10 +15,9 @@ type Page struct {
 	Title         string
 	Body          string
 	FormattedBody template.HTML
-	Filename      string
-	RelativePath  string
 	Layout        string
 	Permalink     string
+	LeafNode
 }
 
 func NewPage(filename string) (*Page, error) {
@@ -30,12 +28,11 @@ func NewPage(filename string) (*Page, error) {
 	}
 
 	page := Page{}
+	page.LeafNode = NewLeafNode(filename)
 	err = json.Unmarshal(file, &page)
 
 	formattedBody := blackfriday.MarkdownCommon([]byte(page.Body))
 	page.FormattedBody = template.HTML(formattedBody)
-	page.Filename = parseFilename(filename)
-	page.RelativePath = filename
 
 	if len(page.Layout) == 0 {
 		page.Layout = config.Layout
@@ -45,7 +42,7 @@ func NewPage(filename string) (*Page, error) {
 }
 
 func (page *Page) save() error {
-	output := strings.Replace(page.RelativePath, config.Source, config.Destination, 1)
+	output := strings.Replace(page.Path, config.Source, config.Destination, 1)
 	output = strings.Replace(output, ".json", ".html", 1)
 
 	page.Permalink = strings.Replace(output, config.Destination, "", 1)
@@ -70,13 +67,5 @@ func (page *Page) save() error {
 }
 
 func (page *Page) IsIndex() bool {
-	return strings.Contains(page.RelativePath, "index.json")
-}
-
-func parseFilename(path string) string {
-	filename := filepath.Base(path)
-	extension := filepath.Ext(path)
-	basename := filename[:len(filename)-len(extension)]
-
-	return basename
+	return strings.Contains(page.Path, "index.json")
 }

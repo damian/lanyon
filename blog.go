@@ -7,7 +7,7 @@ import (
 )
 
 type Blog struct {
-	Pages []*Page
+	Pages
 }
 
 func (blog_entry *Blog) save() error {
