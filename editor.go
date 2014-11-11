@@ -1,26 +1,45 @@
 package main
 
 import (
-	"encoding/json"
-	"io"
-	"net/http"
+	"fmt"
+	"github.com/ant0ine/go-json-rest/rest"
+	"sync"
+  "net/http"
 )
 
-func NewEditor() error {
-	http.HandleFunc("/entries", HandleEntries)
-	http.HandleFunc("/", HandleIndex)
+var lock = sync.RWMutex{}
 
-	http.ListenAndServe(":8080", nil)
+func NewEditor() error {
+	handler := rest.ResourceHandler{
+		EnableRelaxedContentType: true,
+	}
+	err := handler.SetRoutes(
+		&rest.Route{"GET", "/blogs", GetAllBlogs},
+		// &rest.Route{"GET", "/blogs/:id/edit", GetBlog},
+		// &rest.Route{"PUT", "/blogs/:id", UpdateBlog},
+	)
+	if err != nil {
+		fmt.Println("Set routes error: ", err)
+	}
+
+  http.Handle("/api/v1/", http.StripPrefix("/api/v1", &handler))
+  http.Handle("/", http.FileServer(http.Dir("./editor")))
+
+  http.ListenAndServe(":8080", nil)
 
 	return nil
 }
 
-func HandleIndex(w http.ResponseWriter, r *http.Request) {
+func GetAllBlogs(w rest.ResponseWriter, r *rest.Request) {
+	lock.RLock()
+	blog_entry, _ := NewBlog(config.Source)
+	lock.RUnlock()
+	w.WriteJson(&blog_entry)
 }
 
-func HandleEntries(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	blog_entry, _ := NewBlog(config.Source)
-	result, _ := json.Marshal(blog_entry)
-	io.WriteString(w, string(result))
-}
+// func HandleEntries(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
+// 	blog_entry, _ := NewBlog(config.Source)
+// 	result, _ := json.Marshal(blog_entry)
+// 	io.WriteString(w, string(result))
+// }

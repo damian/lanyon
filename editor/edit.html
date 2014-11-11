@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html>
   <head>
-     <title>Manage blogs</title>
+     <title>Editing interface</title>
 
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width" />
@@ -9,11 +9,20 @@
       <link rel="stylesheet" href="/stylesheets/application.css" type="text/css" media="screen, projection">
       <link rel="stylesheet" href="/stylesheets/codemirror.css" type="text/css" media="screen, projection">
       <link rel="stylesheet" href="/stylesheets/writing.css" type="text/css" media="screen, projection">
-      <script src="/javascripts/angular.min.js"></script>
   </head>
 
   <body>
-    <div class="site" ng-controller="BlogIndexController"></div>
-    <!-- <script src="/javascripts/index.js"></script> -->
+    <div class="site">
+      <form>
+        <input type="text" name="title" placeholder="Type your title" />
+        <textarea name="body" placeholder="Type your post" rows="5"></textarea>
+        <input type="submit" value="Cancel">
+        <input type="submit" value="Save draft">
+        <input type="submit" value="Publish">
+      </form>
+    </div>
+    <script src="/javascripts/codemirror.js"></script>
+    <script src="/javascripts/codemirror/markdown.js"></script>
+    <script src="/javascripts/application.js"></script>
   </body>
 </html>
