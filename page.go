@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/russross/blackfriday"
@@ -55,6 +57,11 @@ func (page *Page) save() error {
 	var doc bytes.Buffer
 	tmpl := template.Must(template.ParseGlob("layouts/*.tmpl"))
 	tmpl.ExecuteTemplate(&doc, page.Layout, &site)
+
+	outputDir := filepath.Dir(output)
+	if _, err := os.Stat(outputDir); os.IsNotExist(err) {
+		os.MkdirAll(outputDir, 0777)
+	}
 
 	err = ioutil.WriteFile(output, []byte(doc.String()), 0666)
 

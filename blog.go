@@ -28,17 +28,6 @@ func NewBlog(dirname string) (*Blog, error) {
 		}
 
 		if stat.IsDir() {
-			directory, err := NewDirectory(path)
-
-			if err != nil {
-				return nil
-			}
-
-			err = directory.save()
-
-			if err != nil {
-				fmt.Println("Boo: ", directory)
-			}
 			return nil
 		}
 
