@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="app">
   <head>
      <title>Manage blogs</title>
 
@@ -10,10 +10,12 @@
       <link rel="stylesheet" href="/stylesheets/codemirror.css" type="text/css" media="screen, projection">
       <link rel="stylesheet" href="/stylesheets/writing.css" type="text/css" media="screen, projection">
       <script src="/javascripts/angular.min.js"></script>
+      <script src="/javascripts/index.js"></script>
   </head>
 
   <body>
-    <div class="site" ng-controller="BlogIndexController"></div>
-    <!-- <script src="/javascripts/index.js"></script> -->
+    <div class="site" ng-controller="BlogIndexController">
+      <a href="/{{blog.Path}}/edit" ng-repeat="blog in blogs">{{blog.Title}}</a>
+    </div>
   </body>
 </html>
