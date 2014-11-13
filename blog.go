@@ -18,6 +18,18 @@ func (blog_entry *Blog) save() error {
 	return nil
 }
 
+func (blog_entry *Blog) FindById(id string) *Page {
+	var found *Page
+	for _, page := range blog_entry.Pages {
+		if page.Name == id {
+			found = page
+			break
+		}
+	}
+
+	return found
+}
+
 func NewBlog(dirname string) (*Blog, error) {
 	blog_entry := Blog{}
 

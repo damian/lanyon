@@ -1,0 +1,8 @@
+<article class="post">
+  <div class="intro">
+    <h1>{{blog.Title}}</h1>
+    <div class="meta"></div>
+  </div>
+  <span ng-bind-html="blog.SanitizedFormattedBody"></span>
+</article>
+<a class="edit" href="#/{{blog.Name}}/edit">Edit</a>

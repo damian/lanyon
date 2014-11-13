@@ -38,6 +38,7 @@ func main() {
 			Name:  "editor",
 			Usage: "launches editor mode for writing new blog posts",
 			Action: func(c *cli.Context) {
+				blog, _ = NewBlog(config.Source)
 				NewEditor()
 			},
 		},
